@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/convertionUnitFragment">
+
+    <fragment
+        android:id="@+id/convertionUnitFragment"
+        android:name="com.rebirth.unitfy.ui.fragments.ConvertionUnitFragment"
+        android:label="@string/covert_fragment_title"
+        tools:layout="@layout/fragment_convertion_unit" />
+    <fragment
+        android:id="@+id/registerFormulaFragment"
+        android:name="com.rebirth.unitfy.ui.fragments.RegisterFormulaFragment"
+        android:label="@string/register_fragment_title"
+        tools:layout="@layout/fragment_register_formula" >
+        <action
+            android:id="@+id/action_registerFormulaFragment_to_convertionUnitFragment"
+            app:destination="@id/convertionUnitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="com.rebirth.unitfy.ui.fragments.AboutAppFragment"
+        android:label="@string/about_fragment_title"
+        tools:layout="@layout/fragment_about_app" />
+</navigation>

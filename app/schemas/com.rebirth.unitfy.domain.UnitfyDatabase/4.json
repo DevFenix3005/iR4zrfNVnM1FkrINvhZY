@@ -1,0 +1,206 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 4,
+    "identityHash": "0b711fa7089497def9ae3c99bb4ea0ff",
+    "entities": [
+      {
+        "tableName": "unit_classification",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unit_classification_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `classification_name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "unit_classification_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "classification_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "unit_classification_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "unit_classification_classification_name_IDX",
+            "unique": true,
+            "columnNames": [
+              "classification_name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `unit_classification_classification_name_IDX` ON `${TABLE_NAME}` (`classification_name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "convertion_unit",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`convertion_unit_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `convertion_unit_name` TEXT NOT NULL, `convertion_unit_sufix` TEXT NOT NULL, `unit_classification_id` INTEGER NOT NULL, FOREIGN KEY(`unit_classification_id`) REFERENCES `unit_classification`(`unit_classification_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "convertion_unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitName",
+            "columnName": "convertion_unit_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sufix",
+            "columnName": "convertion_unit_sufix",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classificationId",
+            "columnName": "unit_classification_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "convertion_unit_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "convertion_unit_convertion_unit_name_IDX",
+            "unique": true,
+            "columnNames": [
+              "convertion_unit_name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `convertion_unit_convertion_unit_name_IDX` ON `${TABLE_NAME}` (`convertion_unit_name`)"
+          },
+          {
+            "name": "convertion_unit_convertion_unit_sufix_IDX",
+            "unique": true,
+            "columnNames": [
+              "convertion_unit_sufix"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `convertion_unit_convertion_unit_sufix_IDX` ON `${TABLE_NAME}` (`convertion_unit_sufix`)"
+          },
+          {
+            "name": "convertion_unit_unit_classification_id_IDX",
+            "unique": false,
+            "columnNames": [
+              "unit_classification_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `convertion_unit_unit_classification_id_IDX` ON `${TABLE_NAME}` (`unit_classification_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "unit_classification",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "unit_classification_id"
+            ],
+            "referencedColumns": [
+              "unit_classification_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "mutation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mutation_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `formula_convertion` TEXT NOT NULL, `formula_invertion` TEXT NOT NULL, `convertion_unit_id` INTEGER NOT NULL, `invertion_unit_id` INTEGER NOT NULL, FOREIGN KEY(`convertion_unit_id`) REFERENCES `convertion_unit`(`convertion_unit_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`invertion_unit_id`) REFERENCES `convertion_unit`(`convertion_unit_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "mutationId",
+            "columnName": "mutation_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formulaConvertion",
+            "columnName": "formula_convertion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formulaInvertion",
+            "columnName": "formula_invertion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "convertionUnitId",
+            "columnName": "convertion_unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "invertionUnitId",
+            "columnName": "invertion_unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mutation_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "mutation_convertion_unit_id_IDX",
+            "unique": true,
+            "columnNames": [
+              "convertion_unit_id",
+              "invertion_unit_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `mutation_convertion_unit_id_IDX` ON `${TABLE_NAME}` (`convertion_unit_id`, `invertion_unit_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "convertion_unit",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "convertion_unit_id"
+            ],
+            "referencedColumns": [
+              "convertion_unit_id"
+            ]
+          },
+          {
+            "table": "convertion_unit",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "invertion_unit_id"
+            ],
+            "referencedColumns": [
+              "convertion_unit_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0b711fa7089497def9ae3c99bb4ea0ff')"
+    ]
+  }
+}

@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.fragments.ConvertionUnitFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rebirth.unitfy.viewmodel.ConvertionUnitViewModel" />
+    </data>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/classification_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/unity_borders"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/classification_text"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/classification_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/contetn_desc_class_spinner"
+                android:minHeight="48dp"
+                app:entries="@{vm.classificationUnits}"
+                app:itemSelected="@{vm.onClassificationItemSelectedListener}" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/from_unit_convertion_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/unity_borders"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/origin_text"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/from_unit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_desc_from_spinner"
+                android:minHeight="48dp"
+                app:entries="@{vm.originUnits}"
+                app:itemSelected="@{vm.onConvertionUnitOriginItemSelectedListener}"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/from_unit_convertion_ti_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/origin_text"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/from_unit_convertion_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/backgroundColor"
+                    android:gravity="end"
+                    android:inputType="numberDecimal|numberSigned"
+                    android:text="@={vm.originQ}"
+                    android:textColorHint="#616161"
+                    app:inputFocus="@{false}"
+                    app:onFocusListener="@{vm.onFocusListener}"
+                    app:onTextWatcher="@{vm.onInputTextWatcher}"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/to_unit_convertion_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/unity_borders"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/destiny_text"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/to_unit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_desc_to_spinner"
+                android:minHeight="48dp"
+                app:entries="@{vm.destinyUnits}"
+                app:itemSelected="@{vm.onConvertionUnitDestinyItemSelectedListener}" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/to_unit_convertion_ti_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/destiny_text"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/to_unit_convertion_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/backgroundColor"
+                    android:gravity="end"
+                    android:inputType="numberDecimal|numberSigned"
+                    android:text="@={vm.destinyQ}"
+                    android:textColorHint="#616161"
+                    app:inputFocus="@{false}"
+                    app:onFocusListener="@{vm.onFocusListener}"
+                    app:onTextWatcher="@{vm.onInputTextWatcher}"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/panel_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`7`)}"
+                android:text="@string/key_seven"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_4"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_8"
+                android:layout_width="0dp"
+
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`8`)}"
+                android:text="@string/key_eight"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_5"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_9"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_7"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_9"
+                android:layout_width="0dp"
+
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`9`)}"
+                android:text="@string/key_nine"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_6"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_delete"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_8"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_delete"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`ClearOne`)}"
+                android:text="@string/delete_key"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_deleteall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_9"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`4`)}"
+                android:text="@string/key_four"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_1"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_7" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`5`)}"
+                android:text="@string/key_five"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_2"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_6"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_4"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_8" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`6`)}"
+                android:text="@string/key_six"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_3"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_deleteall"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_5"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_9" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_deleteall"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`ClearAll`)}"
+                android:text="@string/clearall_key"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_6"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_delete" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`1`)}"
+                android:text="@string/key_one"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_signchange"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_4" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`2`)}"
+                android:text="@string/key_two"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_0"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_3"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_1"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_5" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`3`)}"
+                android:text="@string/key_three"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_dot"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_up"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_2"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_6" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_up"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`UP`)}"
+                android:text="@string/key_up"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/panel_button_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_3"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_deleteall" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_signchange"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`FlipSign`)}"
+                android:text="@string/key_swift"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`0`)}"
+                android:text="@string/key_zero"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_dot"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_signchange"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_dot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`Dot`)}"
+                android:text="@string/key_dot"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/panel_button_down"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_0"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_3" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_button_down"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_button"
+                android:gravity="center_horizontal|center_vertical"
+                android:onClick="@{()->vm.onClickButtonPanel(`DOWN`)}"
+                android:text="@string/key_down"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/panel_button_dot"
+                app:layout_constraintTop_toBottomOf="@+id/panel_button_up" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
