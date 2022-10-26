@@ -1,0 +1,151 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "0a910ddc118750c75870559d17bea6d6",
+    "entities": [
+      {
+        "tableName": "unit_classification",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unit_classification_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `classification_name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "unit_classification_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "classification_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "unit_classification_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "unit_classification_classification_name_IDX",
+            "unique": true,
+            "columnNames": [
+              "classification_name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `unit_classification_classification_name_IDX` ON `${TABLE_NAME}` (`classification_name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "convertion_unit",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`convertion_unit_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `convertion_unit_name` TEXT NOT NULL, `convertion_unit_sufix` TEXT NOT NULL, `unit_classification_id` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "convertion_unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitName",
+            "columnName": "convertion_unit_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sufix",
+            "columnName": "convertion_unit_sufix",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classificationId",
+            "columnName": "unit_classification_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "convertion_unit_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "convertion_unit_convertion_unit_name_IDX",
+            "unique": true,
+            "columnNames": [
+              "convertion_unit_name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `convertion_unit_convertion_unit_name_IDX` ON `${TABLE_NAME}` (`convertion_unit_name`)"
+          },
+          {
+            "name": "convertion_unit_convertion_unit_sufix_IDX",
+            "unique": true,
+            "columnNames": [
+              "convertion_unit_sufix"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `convertion_unit_convertion_unit_sufix_IDX` ON `${TABLE_NAME}` (`convertion_unit_sufix`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mutation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mutation_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `formula_convertion` TEXT NOT NULL, `formula_invertion` TEXT NOT NULL, `convertion_unit_id` INTEGER NOT NULL, `invertion_unit_id` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "mutationId",
+            "columnName": "mutation_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formulaConvertion",
+            "columnName": "formula_convertion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formulaInvertion",
+            "columnName": "formula_invertion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "convertionUnitId",
+            "columnName": "convertion_unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "invertionUnitId",
+            "columnName": "invertion_unit_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mutation_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0a910ddc118750c75870559d17bea6d6')"
+    ]
+  }
+}

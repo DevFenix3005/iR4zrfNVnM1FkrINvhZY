@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Unitfy</string>
+    <string name="covert_fragment_title">Conversor</string>
+    <string name="register_fragment_title">Registro</string>
+    <string name="about_fragment_title">Acerca de</string>
+    <string name="classification_text">Clasificacion</string>
+    <string name="contetn_desc_class_spinner">juego de unidades de medida para hacer la conversion</string>
+    <string name="origin_text">Origen</string>
+    <string name="content_desc_from_spinner">origen de las unidades de medida</string>
+    <string name="destiny_text">Destino</string>
+    <string name="content_desc_to_spinner">origen de las unidades de medida</string>
+    <string name="key_seven">7</string>
+    <string name="key_eight">8</string>
+    <string name="key_nine">9</string>
+    <string name="delete_key">⬅</string>
+    <string name="key_four">4</string>
+    <string name="key_five">5</string>
+    <string name="key_six">6</string>
+    <string name="clearall_key">C</string>
+    <string name="key_one">1</string>
+    <string name="key_two">2</string>
+    <string name="key_three">3</string>
+    <string name="key_up">⬆</string>
+    <string name="key_swift">+/-</string>
+    <string name="key_zero">0</string>
+    <string name="key_dot">.</string>
+    <string name="key_down">⬇</string>
+    <string name="selecciona_una_clasificacion">Selecciona una clasificacion</string>
+    <string name="add_text">Agregar</string>
+    <string name="formula_de_conversion">Formula de conversion</string>
+    <string name="formula_de_inversion">Formula de inversion</string>
+    <string name="about_app_text">Sistema de conversión de unidades en el cual tu puedes registrar tus propias clasificaciones de unidades y puedes crear tus propias unidades de conversion.
+    Para dar inicio tu conversion registra una conversion con su formula y su formula de inversion, ya una vez que tengas esto registrado puedes empezar a convertir tus unidades.
+    </string>
+    <string name="nota_texto">Nota: La variable de conversion siempre sera \'x\' en las formulas, esta es la variable que recibe los argunmentos de los campos de texto</string>
+</resources>

@@ -1,0 +1,50 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8d21d3d544a796443e1b50dad280bafd",
+    "entities": [
+      {
+        "tableName": "unit_classification",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unit_classification_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `classification_name` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "unit_classification_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "classification_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "unit_classification_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "unit_classification_classification_name_IDX",
+            "unique": true,
+            "columnNames": [
+              "classification_name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `unit_classification_classification_name_IDX` ON `${TABLE_NAME}` (`classification_name`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d21d3d544a796443e1b50dad280bafd')"
+    ]
+  }
+}
