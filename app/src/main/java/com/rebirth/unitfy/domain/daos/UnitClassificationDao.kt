@@ -14,7 +14,7 @@ interface UnitClassificationDao {
     suspend fun fetchAll(): List<UnitClassification>
 
     @Insert
-    suspend fun create(vararg unitClassification: UnitClassification)
+    suspend fun create(unitClassification: UnitClassification): Long
 
 
     @Transaction

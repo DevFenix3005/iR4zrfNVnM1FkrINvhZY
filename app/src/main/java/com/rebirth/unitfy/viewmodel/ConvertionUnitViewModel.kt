@@ -39,16 +39,17 @@ class ConvertionUnitViewModel @Inject constructor(
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             Log.i(TAG, "Seleccionada clasificacion de unidad")
             val unit: UnitClassification = classificationUnits.value?.get(position)!!
-            if (unit.id != -1L) {
-                unit.id.also { unitId ->
+            val unitId = unit.id
+            if (unitId != null && unitId != -1L) {
+                unitId.also { innerUnitId ->
                     originUnits.run {
                         value = convertionModel.createConvertionUnitsByClassification(
-                            unitId, "Selecciona un origen"
+                            innerUnitId, "Selecciona un origen"
                         )
                     }
                     destinyUnits.run {
                         value = convertionModel.createConvertionUnitsByClassification(
-                            unitId, "Selecciona un destino"
+                            innerUnitId, "Selecciona un destino"
                         )
                     }
                 }

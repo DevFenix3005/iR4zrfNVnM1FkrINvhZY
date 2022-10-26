@@ -9,10 +9,10 @@ import com.rebirth.unitfy.domain.entities.ConvertionUnit
 interface ConvertioUnitDao {
 
     @Query("SELECT * FROM convertion_unit cu0 WHERE cu0.unit_classification_id = :ucid")
-    suspend fun fetchAllByClassification(ucid:Long): List<ConvertionUnit>
+    suspend fun fetchAllByClassification(ucid: Long): List<ConvertionUnit>
 
     @Insert
-    suspend fun create(vararg convertionUnit: ConvertionUnit)
+    suspend fun create(convertionUnit: ConvertionUnit): Long
 
 
 }

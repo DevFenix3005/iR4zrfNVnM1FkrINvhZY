@@ -11,7 +11,7 @@ import com.rebirth.unitfy.domain.entities.UnitClassification
 
 @Database(
     entities = [UnitClassification::class, ConvertionUnit::class, Mutation::class],
-    version = 4
+    version = 20
 )
 abstract class UnitfyDatabase : RoomDatabase() {
 

@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
     )]
 )
 data class UnitClassification(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "unit_classification_id") val id: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "unit_classification_id") var id: Long? = null,
     @ColumnInfo(name = "classification_name") val name: String
 )
 

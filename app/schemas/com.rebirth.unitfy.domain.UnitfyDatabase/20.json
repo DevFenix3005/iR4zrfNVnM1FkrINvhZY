@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 4,
-    "identityHash": "1a3efb425c5d8da80109b412343a5842",
+    "version": 20,
+    "identityHash": "110387fd1aaab71d4f0abd9ad091e13d",
     "entities": [
       {
         "tableName": "unit_classification",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unit_classification_id` INTEGER PRIMARY KEY AUTOINCREMENT, `classification_name` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`unit_classification_id` INTEGER PRIMARY KEY AUTOINCREMENT, `classification_name` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,7 +18,7 @@
             "fieldPath": "name",
             "columnName": "classification_name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -42,13 +42,13 @@
       },
       {
         "tableName": "convertion_unit",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`convertion_unit_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `convertion_unit_name` TEXT NOT NULL, `convertion_unit_sufix` TEXT NOT NULL, `unit_classification_id` INTEGER NOT NULL, FOREIGN KEY(`unit_classification_id`) REFERENCES `unit_classification`(`unit_classification_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`convertion_unit_id` INTEGER PRIMARY KEY AUTOINCREMENT, `convertion_unit_name` TEXT NOT NULL, `convertion_unit_sufix` TEXT NOT NULL, `unit_classification_id` INTEGER NOT NULL, FOREIGN KEY(`unit_classification_id`) REFERENCES `unit_classification`(`unit_classification_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "convertion_unit_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "unitName",
@@ -120,13 +120,13 @@
       },
       {
         "tableName": "mutation",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mutation_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `formula_convertion` TEXT NOT NULL, `formula_invertion` TEXT NOT NULL, `convertion_unit_id` INTEGER NOT NULL, `invertion_unit_id` INTEGER NOT NULL, FOREIGN KEY(`convertion_unit_id`) REFERENCES `convertion_unit`(`convertion_unit_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`invertion_unit_id`) REFERENCES `convertion_unit`(`convertion_unit_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mutation_id` INTEGER PRIMARY KEY AUTOINCREMENT, `formula_convertion` TEXT NOT NULL, `formula_invertion` TEXT NOT NULL, `convertion_unit_id` INTEGER NOT NULL, `invertion_unit_id` INTEGER NOT NULL, FOREIGN KEY(`convertion_unit_id`) REFERENCES `convertion_unit`(`convertion_unit_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`invertion_unit_id`) REFERENCES `convertion_unit`(`convertion_unit_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "mutationId",
             "columnName": "mutation_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "formulaConvertion",
@@ -200,7 +200,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1a3efb425c5d8da80109b412343a5842')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '110387fd1aaab71d4f0abd9ad091e13d')"
     ]
   }
 }

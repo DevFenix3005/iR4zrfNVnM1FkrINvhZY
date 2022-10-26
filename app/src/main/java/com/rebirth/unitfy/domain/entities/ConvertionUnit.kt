@@ -32,7 +32,7 @@ import androidx.room.ForeignKey.CASCADE
     ]
 )
 data class ConvertionUnit(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "convertion_unit_id") val id: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "convertion_unit_id") var id: Long? = null,
     @ColumnInfo(name = "convertion_unit_name") val unitName: String,
     @ColumnInfo(name = "convertion_unit_sufix") val sufix: String,
     @ColumnInfo(name = "unit_classification_id") val classificationId: Long

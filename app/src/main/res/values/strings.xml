@@ -26,4 +26,7 @@
     <string name="key_dot">.</string>
     <string name="key_down">⬇</string>
     <string name="selecciona_una_clasificacion">Selecciona una clasificacion</string>
+    <string name="add_text">Agregar</string>
+    <string name="formula_de_conversion">Formula de conversion</string>
+    <string name="formula_de_inversion">Formula de inversion</string>
 </resources>

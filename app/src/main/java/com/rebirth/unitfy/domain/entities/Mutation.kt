@@ -29,7 +29,7 @@ import androidx.room.*
     ]
 )
 data class Mutation(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "mutation_id") val mutationId: Long,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "mutation_id") var mutationId: Long? = null,
     @ColumnInfo(name = "formula_convertion") val formulaConvertion: String,
     @ColumnInfo(name = "formula_invertion") val formulaInvertion: String,
     @ColumnInfo(name = "convertion_unit_id") val convertionUnitId: Long,
