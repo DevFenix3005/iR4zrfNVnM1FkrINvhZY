@@ -64,7 +64,7 @@ class ConvertionUnitViewModel @Inject constructor(
                 selectedOriginUnit.value = list[position]
                 selectMutation()
                 convertionFunction()
-                Log.i(TAG, "Seleccionada unidad de convercion de origen")
+                Log.i(TAG, "Seleccionada unidad de conversión de origen")
             }
         }
     }
@@ -76,7 +76,7 @@ class ConvertionUnitViewModel @Inject constructor(
                 selectedDestinyUnit.value = list[position]
                 selectMutation()
                 invertConvertionFunction()
-                Log.i(TAG, "Seleccionada unidad de convercion de destino")
+                Log.i(TAG, "Seleccionada unidad de conversión de destino")
             }
         }
     }

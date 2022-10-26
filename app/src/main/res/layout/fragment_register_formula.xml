@@ -50,7 +50,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="?attr/colorPrimary"
-                android:onClick="@{(button)->vm.onCreateDialogClassification(button)}"
+                android:onClick="@{vm::onCreateDialogClassification}"
                 android:src="@android:drawable/ic_menu_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +109,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="?attr/colorPrimary"
-                android:onClick="@{(button)->vm.onCreateDialogConvUnit(button)}"
+                android:onClick="@{vm::onCreateDialogConvUnit}"
                 android:src="@android:drawable/ic_menu_add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,17 +128,16 @@
             android:background="@drawable/unity_borders">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:onClick="@{()-> vm.addNewMutation()}"
                 android:id="@+id/appCompatButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:backgroundTint="?attr/colorPrimary"
+                android:onClick="@{vm::addNewMutation}"
                 android:text="@string/add_text"
                 android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
@@ -163,6 +162,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/backgroundColor"
+                    android:enabled="@{vm.selectedOriginUnit != null &amp;&amp; vm.selectedDestinyUnit != null}"
                     android:inputType="textMultiLine"
                     android:text="@={vm.convertionFormula}"
                     android:textColorHint="#757575" />
@@ -200,11 +200,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/backgroundColor"
+                    android:enabled="@{vm.selectedOriginUnit != null &amp;&amp; vm.selectedDestinyUnit != null}"
                     android:inputType="textMultiLine"
                     android:text="@={vm.invertionFormula}"
                     android:textColorHint="#757575" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_horizontal|bottom"
+                android:text="@string/nota_texto"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appCompatButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

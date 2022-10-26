@@ -3,6 +3,7 @@ package com.rebirth.unitfy.viewmodel
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
@@ -32,8 +33,8 @@ class RegisterFormulaViewModel @Inject constructor(
     var destinyUnits = registerModel.createEmptyConvertionUnitList()
 
     private var selectedClassification = MutableLiveData<UnitClassification>(null)
-    private var selectedOriginUnit = MutableLiveData<ConvertionUnit>(null)
-    private var selectedDestinyUnit = MutableLiveData<ConvertionUnit>(null)
+    var selectedOriginUnit = MutableLiveData<ConvertionUnit>(null)
+    var selectedDestinyUnit = MutableLiveData<ConvertionUnit>(null)
 
     val onClassificationItemSelectedListener = object : MyOnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -63,7 +64,7 @@ class RegisterFormulaViewModel @Inject constructor(
             val list = originUnits.value
             if (!list.isNullOrEmpty()) {
                 selectedOriginUnit.value = list[position]
-                Log.i(TAG, "Seleccionada unidad de convercion de origen")
+                Log.i(TAG, "Seleccionada unidad de conversión de origen")
             }
         }
     }
@@ -73,50 +74,73 @@ class RegisterFormulaViewModel @Inject constructor(
             val list = destinyUnits.value
             if (!list.isNullOrEmpty()) {
                 selectedDestinyUnit.value = list[position]
-                Log.i(TAG, "Seleccionada unidad de convercion de destino")
+                Log.i(TAG, "Seleccionada unidad de conversión de destino")
             }
         }
     }
 
-    val listenerToAddClassification = object : NewUnitOrClassDialog.AddUnitOrClassListener {
+    private val listenerToAddClassification = object : NewUnitOrClassDialog.AddUnitOrClassListener {
         override fun onDialogPositiveClick(dialog: DialogFragment) {
             val view = dialog.dialog
             if (view != null) {
                 val textInputEditText: TextInputEditText =
                     view.findViewById(R.id.new_class_or_unit_name)
                 val newName = textInputEditText.editableText.toString()
-                val newClassification = registerModel.createNewClassification(newName)
-                Log.i(TAG, "onDialogPositiveClick: $newClassification")
-
-                val lista = classificationUnits.value!!
-                val nuevaLista = mutableListOf<UnitClassification>()
-                for (element in lista) {
-                    nuevaLista.add(element)
+                newName.trim().also {
+                    if (it.isNotEmpty()) {
+                        val newClassification = registerModel.createNewClassification(it)
+                        val lista = classificationUnits.value!!
+                        val nuevaLista = mutableListOf<UnitClassification>()
+                        for (element in lista) {
+                            nuevaLista.add(element)
+                        }
+                        nuevaLista.add(newClassification)
+                        classificationUnits.value = nuevaLista
+                        Toast.makeText(
+                            view.context,
+                            "Nueva clasificacion creada",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
-                nuevaLista.add(newClassification)
-                classificationUnits.value = nuevaLista
             }
         }
     }
-    val listenerToAddUnit = object : NewUnitOrClassDialog.AddUnitOrClassListener {
+
+    private val listenerToAddUnit = object : NewUnitOrClassDialog.AddUnitOrClassListener {
         override fun onDialogPositiveClick(dialog: DialogFragment) {
             val view = dialog.dialog
             if (view != null) {
                 val classification = selectedClassification.value
-                val textInputEditTextName: TextInputEditText =
-                    view.findViewById(R.id.new_class_or_unit_name)
+                if (classification != null) {
+                    val classificationId = classification.id
+                    if (classificationId != null && classificationId != -1L) {
+                        val textInputEditTextName: TextInputEditText =
+                            view.findViewById(R.id.new_class_or_unit_name)
 
-                val textInputEditTextSufix: TextInputEditText =
-                    view.findViewById(R.id.new_conversation_or_unit)
+                        val textInputEditTextSufix: TextInputEditText =
+                            view.findViewById(R.id.new_conversation_or_unit)
 
-
-                val newName = textInputEditTextName.editableText.toString()
-                val newSufix = textInputEditTextSufix.editableText.toString()
-                val newConvertionUnit =
-                    registerModel.createNewUnit(newName, newSufix, classification?.id!!)
-                Log.i(TAG, "onDialogPositiveClick: $newConvertionUnit")
-                addNewElementToList(newConvertionUnit, originUnits)
-                addNewElementToList(newConvertionUnit, destinyUnits)
+                        val newName = textInputEditTextName.editableText.toString()
+                        val newSufix = textInputEditTextSufix.editableText.toString()
+                        val newConvertionUnit =
+                            registerModel.createNewUnit(newName, newSufix, classificationId)
+                        Log.i(TAG, "onDialogPositiveClick: $newConvertionUnit")
+                        addNewElementToList(newConvertionUnit, originUnits)
+                        addNewElementToList(newConvertionUnit, destinyUnits)
+                        Toast.makeText(
+                            view.context,
+                            "Nueva unidad de conversión creada",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        view.context,
+                        "Selecciona una clasificacion",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }
@@ -151,26 +175,30 @@ class RegisterFormulaViewModel @Inject constructor(
     ) {
         val parent = button.findFragment<RegisterFormulaFragment>()
         val activity = parent.requireActivity()
-        val dialog = NewUnitOrClassDialog("`Crear nueva unidad", R.layout.dialog_add_new_converunit)
+        val dialog = NewUnitOrClassDialog("Crear nueva unidad", R.layout.dialog_add_new_converunit)
         dialog.listener = listenerToAddUnit
         dialog.show(activity.supportFragmentManager, "NewUnitOrClassDialog")
     }
 
-    fun addNewMutation() {
-        val convertionFormula = convertionFormula.value
-        val invertionFormula = invertionFormula.value
+    fun addNewMutation(button: View) {
+        val parent = button.findFragment<RegisterFormulaFragment>()
+        val activity = parent.requireActivity()
+
+        val convertionFormula = "f(x)=${convertionFormula.value}"
+        val invertionFormula = "f(x)=${invertionFormula.value}"
         val selectedOriginUnit = selectedOriginUnit.value
         val selectedDestinyUnit = selectedDestinyUnit.value
         registerModel.createMutation(
-            convertionFormula!!,
-            invertionFormula!!,
+            convertionFormula,
+            invertionFormula,
             selectedOriginUnit?.id!!,
             selectedDestinyUnit?.id!!
         )
 
-
+        Toast.makeText(activity, "Nueva conversión creada", Toast.LENGTH_LONG).show()
+        this.convertionFormula.value = ""
+        this.invertionFormula.value = ""
     }
-
 
     companion object {
         private const val TAG = "RegisterFormulaViewMode"

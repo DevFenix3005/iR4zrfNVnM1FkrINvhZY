@@ -14,7 +14,7 @@ interface MutationDao {
     suspend fun fetchAll(): List<Mutation>
 
     @Insert
-    suspend fun create(mutation: Mutation): Long
+    suspend fun create(vararg mutation: Mutation): List<Long>
 
 
     @Transaction

@@ -29,4 +29,8 @@
     <string name="add_text">Agregar</string>
     <string name="formula_de_conversion">Formula de conversion</string>
     <string name="formula_de_inversion">Formula de inversion</string>
+    <string name="about_app_text">Sistema de conversión de unidades en el cual tu puedes registrar tus propias clasificaciones de unidades y puedes crear tus propias unidades de conversion.
+    Para dar inicio tu conversion registra una conversion con su formula y su formula de inversion, ya una vez que tengas esto registrado puedes empezar a convertir tus unidades.
+    </string>
+    <string name="nota_texto">Nota: La variable de conversion siempre sera \'x\' en las formulas, esta es la variable que recibe los argunmentos de los campos de texto</string>
 </resources>

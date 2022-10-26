@@ -41,16 +41,26 @@ class RegisterModel @Inject constructor(
         fInvertion: String,
         unitOrigin: Long,
         unitDestiny: Long
-    ): Mutation {
-        val mutation = Mutation(
+    ): List<Mutation> {
+        val mutationConvertion = Mutation(
             formulaConvertion = fConvertion,
             formulaInvertion = fInvertion,
             convertionUnitId = unitOrigin, invertionUnitId = unitDestiny
         )
-        mutation.mutationId = runBlocking {
-            return@runBlocking mutationDao.create(mutation)
+        val mutationInvertion = Mutation(
+            formulaConvertion = fInvertion,
+            formulaInvertion = fConvertion,
+            convertionUnitId = unitDestiny,
+            invertionUnitId = unitOrigin
+        )
+
+        val newMutations = runBlocking {
+            return@runBlocking mutationDao.create(mutationConvertion, mutationInvertion)
         }
-        return mutation
+        mutationConvertion.mutationId = newMutations[0]
+        mutationInvertion.mutationId = newMutations[1]
+
+        return listOf(mutationConvertion, mutationInvertion)
     }
 
 }
