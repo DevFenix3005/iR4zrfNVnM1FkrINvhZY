@@ -83,7 +83,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/from_unit_convertion_input"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="?attr/backgroundColor"
                     android:gravity="end"
                     android:inputType="numberDecimal|numberSigned"
@@ -133,7 +133,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/to_unit_convertion_input"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="?attr/backgroundColor"
                     android:gravity="end"
                     android:inputType="numberDecimal|numberSigned"
