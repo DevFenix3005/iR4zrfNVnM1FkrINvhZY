@@ -31,18 +31,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/classification_text"
+                android:text="@{`Clasificacion: ` + vm.classificationUnits.name}"
                 android:textColor="?attr/colorOnBackground"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="FOOOOOOOOOO" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/classification_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/contetn_desc_class_spinner"
-                android:minHeight="48dp"
-                app:entries="@{vm.classificationUnits}"
-                app:itemSelected="@{vm.onClassificationItemSelectedListener}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat

@@ -12,6 +12,7 @@ import com.rebirth.unitfy.domain.entities.ConvertionUnit
 import com.rebirth.unitfy.domain.entities.Mutation
 import com.rebirth.unitfy.domain.entities.UnitClassification
 import com.rebirth.unitfy.models.ConvertionModel
+import com.rebirth.unitfy.ui.fragments.ConvertionUnitFragmentArgs
 import com.rebirth.unitfy.ui.listeners.MyOnItemSelectedListener
 import com.rebirth.unitfy.ui.listeners.MyTextWatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,9 +23,7 @@ class ConvertionUnitViewModel @Inject constructor(
     private val convertionModel: ConvertionModel
 ) : ViewModel() {
 
-    val classificationUnits: MutableLiveData<List<UnitClassification>>
-        get() = convertionModel.createContentToClassificationUnits()
-
+    val classificationUnits: MutableLiveData<UnitClassification> = MutableLiveData()
     val originQ = MutableLiveData("")
     val destinyQ = MutableLiveData("")
     val inputSelected = MutableLiveData(0)
@@ -35,27 +34,27 @@ class ConvertionUnitViewModel @Inject constructor(
     private var selectedDestinyUnit = MutableLiveData<ConvertionUnit>(null)
     private var selectedMutation = MutableLiveData<Mutation>(null)
 
-    val onClassificationItemSelectedListener = object : MyOnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            Log.i(TAG, "Seleccionada clasificacion de unidad")
-            val unit: UnitClassification = classificationUnits.value?.get(position)!!
-            val unitId = unit.id
-            if (unitId != null && unitId != -1L) {
-                unitId.also { innerUnitId ->
-                    originUnits.run {
-                        value = convertionModel.createConvertionUnitsByClassification(
-                            innerUnitId, "Selecciona un origen"
-                        )
-                    }
-                    destinyUnits.run {
-                        value = convertionModel.createConvertionUnitsByClassification(
-                            innerUnitId, "Selecciona un destino"
-                        )
-                    }
+    fun selectUnitsByClassification(convertionUnitFragmentArgs: ConvertionUnitFragmentArgs) {
+        val classificationUnitId: Long = convertionUnitFragmentArgs.unitClassificationId
+        classificationUnits.value = convertionModel.findClassificationById(classificationUnitId)
+
+        Log.i(TAG, "Seleccionada clasificacion de unidad")
+        if (classificationUnitId != -1L) {
+            classificationUnitId.also { innerUnitId ->
+                originUnits.run {
+                    value = convertionModel.createConvertionUnitsByClassification(
+                        innerUnitId, "Selecciona un origen"
+                    )
+                }
+                destinyUnits.run {
+                    value = convertionModel.createConvertionUnitsByClassification(
+                        innerUnitId, "Selecciona un destino"
+                    )
                 }
             }
         }
     }
+
 
     val onConvertionUnitOriginItemSelectedListener = object : MyOnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -108,7 +107,12 @@ class ConvertionUnitViewModel @Inject constructor(
             val cuoId = convertionUnitOrigin.id.takeIf { it != -1L }
             val cudId = convertionUnitDestiny.id.takeIf { it != -1L }
             if (cuoId != null && cudId != null) {
-                selectedMutation.value = convertionModel.fetchMutationByUnits(cuoId, cudId)
+                if (cuoId == cudId) {
+                    selectedMutation.value = Mutation(999999, "x", "x", cuoId, cuoId)
+                } else {
+                    selectedMutation.value = convertionModel.fetchMutationByUnits(cuoId, cudId)
+
+                }
             }
         }
     }

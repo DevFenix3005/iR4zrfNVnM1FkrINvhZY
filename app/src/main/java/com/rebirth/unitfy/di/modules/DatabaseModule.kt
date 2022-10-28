@@ -22,7 +22,6 @@ object DatabaseModule {
     fun provideDatabase(@ApplicationContext context: Context): UnitfyDatabase {
         return Room
             .databaseBuilder(context, UnitfyDatabase::class.java, "unitfy-database")
-            .fallbackToDestructiveMigration()
             .createFromAsset("database/unitfy.db")
             .build()
     }

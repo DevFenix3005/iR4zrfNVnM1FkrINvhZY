@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.textfield.TextInputEditText
 import com.rebirth.unitfy.databinding.FragmentConvertionUnitBinding
 import com.rebirth.unitfy.domain.entities.ConvertionUnit
@@ -26,6 +27,7 @@ class ConvertionUnitFragment : Fragment() {
     private var _binding: FragmentConvertionUnitBinding? = null
     private val binding get() = _binding!!
 
+    private val args: ConvertionUnitFragmentArgs by navArgs()
     val viewModel: ConvertionUnitViewModel by viewModels()
 
     override fun onCreateView(
@@ -35,9 +37,10 @@ class ConvertionUnitFragment : Fragment() {
         if (_binding == null) {
             _binding = FragmentConvertionUnitBinding.inflate(inflater, container, false)
         }
-
+        binding.vm = viewModel.apply {
+            selectUnitsByClassification(args)
+        }
         binding.lifecycleOwner = this.viewLifecycleOwner
-        binding.vm = viewModel
         return binding.root
     }
 

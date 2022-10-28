@@ -33,4 +33,6 @@
     Para dar inicio tu conversion registra una conversion con su formula y su formula de inversion, ya una vez que tengas esto registrado puedes empezar a convertir tus unidades.
     </string>
     <string name="nota_texto">Nota: La variable de conversion siempre sera \'x\' en las formulas, esta es la variable que recibe los argunmentos de los campos de texto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

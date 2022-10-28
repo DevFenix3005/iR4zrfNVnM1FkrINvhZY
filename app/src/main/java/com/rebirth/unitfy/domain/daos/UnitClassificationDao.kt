@@ -10,6 +10,9 @@ import com.rebirth.unitfy.domain.entities.UnitClassification
 @Dao
 interface UnitClassificationDao {
 
+    @Query("SELECT * FROM unit_classification uc0 WHERE uc0.unit_classification_id = :classId")
+    suspend fun fetchAById(classId: Long): UnitClassification
+
     @Query("SELECT * FROM unit_classification")
     suspend fun fetchAll(): List<UnitClassification>
 
@@ -20,5 +23,6 @@ interface UnitClassificationDao {
     @Transaction
     @Query("SELECT * FROM unit_classification")
     suspend fun fetchAllWithUnits(): List<ClassificationWithUnits>
+
 
 }

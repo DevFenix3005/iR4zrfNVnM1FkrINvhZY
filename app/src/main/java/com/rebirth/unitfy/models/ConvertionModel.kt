@@ -3,6 +3,8 @@ package com.rebirth.unitfy.models
 import com.rebirth.unitfy.domain.daos.ConvertioUnitDao
 import com.rebirth.unitfy.domain.daos.MutationDao
 import com.rebirth.unitfy.domain.daos.UnitClassificationDao
+import com.rebirth.unitfy.domain.entities.UnitClassification
+import kotlinx.coroutines.runBlocking
 import org.mariuszgromada.math.mxparser.Argument
 import org.mariuszgromada.math.mxparser.Expression
 import org.mariuszgromada.math.mxparser.Function
@@ -23,6 +25,13 @@ class ConvertionModel @Inject constructor(
         val calc = expression.calculate()
         return if (calc.isNaN()) "0" else calc.toString()
     }
+
+    fun findClassificationById(classId: Long): UnitClassification {
+        return runBlocking {
+            return@runBlocking unitClassificationDao.fetchAById(classId)
+        }
+    }
+
 
     fun tapButtonHandler(key: String, currentValue: String): String {
         when (key) {
